@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEPILINE | Cuenta y Nosotros</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconos -->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    
+    <!-- Fuentes y Estilos -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F9F9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Utilidades */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Lógica Menú Tienda (Hover estricto) */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+            pointer-events: none;
+        }
+        .nav-item-shop:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Estilos específicos Inputs Rhode */
+        .input-rhode {
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            width: 100%;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        .input-rhode:focus {
+            box-shadow: 0 0 0 1px #ccc;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#333] selection:text-white">
+
+    <!-- BARRA SUPERIOR -->
+    <div class="sticky top-0 z-[60]">
+        <div class="bg-[#EBEBEB] text-[#737373] text-[10px] font-bold tracking-widest text-center py-2.5 uppercase">
+            Envío gratis en compras sobre $150.000 ✦ Regalos en cada pedido
+        </div>
+        
+        <!-- NAVBAR -->
+        <nav class="bg-[#F9F9F9]/95 backdrop-blur-md border-b border-gray-200 relative">
+            <div class="max-w-[1920px] mx-auto px-6 md:px-12 h-16 flex justify-between items-center">
+                
+                <!-- Menú Izquierda -->
+                <div class="hidden md:flex space-x-8 h-full items-center">
+                    <!-- TIENDA -->
+                    <div class="nav-item-shop h-full flex items-center relative">
+                        <button onclick="navigateTo('shop')" class="text-[13px] font-bold text-[#333] hover:text-gray-500 uppercase tracking-widest transition-colors py-4 px-2">
+                            Tienda
+                        </button>
+                        <!-- Mega Menu -->
+                        <div class="mega-menu absolute left-0 top-full w-screen bg-[#F4F4F4] border-b border-gray-200 z-50 shadow-xl" style="margin-left: -48px;">
+                            <div class="max-w-[1400px] mx-auto py-10 px-12">
+                                <div class="grid grid-cols-4 gap-6">
+                                    <div class="cursor-pointer group/card">
+                                        <div class="bg-white rounded-lg p-4 mb-3 h-48 flex items-center justify-center relative">
+                                            <span class="absolute top-3 left-3 bg-[#333] text-white px-2 py-0.5 rounded-full text-[10px] font-bold uppercase">Nuevo</span>
+                                            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1887" class="h-32 object-contain mix-blend-multiply group-hover/card:scale-105 transition-transform">
+                                        </div>
+                                        <h4 class="font-bold text-[11px] uppercase">Kit Post-Láser</h4>
+                                    </div>
+                                    <div class="cursor-pointer group/card">
+                                        <div class="bg-white rounded-lg p-4 mb-3 h-48 flex items-center justify-center">
+                                            <img src="https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?q=80&w=2670" class="h-32 object-contain mix-blend-multiply group-hover/card:scale-105 transition-transform">
+                                        </div>
+                                        <h4 class="font-bold text-[11px] uppercase">Serum Vitamina C</h4>
+                                    </div>
+                                    <div class="flex flex-col justify-center items-start pl-8 border-l border-gray-300 col-span-2">
+                                        <h3 class="text-lg font-bold mb-2">Colección de Verano</h3>
+                                        <p class="text-xs text-gray-500 mb-4 max-w-xs">Descubre los esenciales para proteger tu piel del sol.</p>
+                                        <button onclick="navigateTo('shop')" class="text-xs font-bold uppercase underline">Ver Todo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="navigateTo('about')" class="text-[13px] font-bold text-[#333] hover:text-gray-500 uppercase tracking-widest transition-colors">Nosotros</button>
+                    <button onclick="navigateTo('futures')" class="text-[13px] font-bold text-[#333] hover:text-gray-500 uppercase tracking-widest transition-colors">Futuro</button>
+                </div>
+
+                <!-- Logo -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 cursor-pointer" onclick="navigateTo('shop')">
+                    <h1 class="text-3xl font-bold tracking-tighter text-[#333] lowercase">depiline</h1>
+                </div>
+
+                <!-- Menú Derecha -->
+                <div class="flex items-center space-x-6">
+                    <button onclick="toggleSearch()" class="hidden md:block text-[13px] font-bold text-[#333] uppercase tracking-widest hover:text-gray-500">Buscar</button>
+                    <button onclick="navigateTo('account')" class="hidden md:block text-[13px] font-bold text-[#333] uppercase tracking-widest hover:text-gray-500">Cuenta</button>
+                    <button onclick="toggleCart()" class="text-[13px] font-bold text-[#333] uppercase tracking-widest flex items-center hover:text-gray-500">
+                        Carro (<span id="cart-count">0</span>)
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main id="main-content">
+
+        <!-- 1. VISTA CUENTA (2 PÁGINAS: LOGIN & REGISTER) -->
+        <section id="view-account" class="view-section active"> <!-- Activa por defecto para visualizar cambios -->
+            
+            <!-- PÁGINA 1: LOGIN -->
+            <div id="page-login" class="animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-64px)]">
+                    <!-- Imagen Izquierda -->
+                    <div class="relative h-64 md:h-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556228720-1987bb7cb195?q=80&w=2070" class="w-full h-full object-cover" alt="Skin Model" />
+                        <!-- Texto sobre imagen -->
+                        <div class="absolute bottom-20 left-12 max-w-sm">
+                            <h2 class="text-white text-4xl md:text-5xl font-medium tracking-tight leading-tight drop-shadow-md">
+                                It’s time to invest in your SKIN.
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Formulario Derecha -->
+                    <div class="bg-[#F4F4F4] flex flex-col items-center justify-center p-8 md:p-24">
+                        <div class="w-full max-w-sm text-center">
+                            <h2 class="text-4xl font-bold tracking-tight text-[#4A4A4A] mb-8">Login</h2>
+                            
+                            <form class="space-y-4" onsubmit="event.preventDefault();">
+                                <input type="email" placeholder="Email" class="input-rhode placeholder-gray-500 text-sm">
+                                <input type="password" placeholder="Password" class="input-rhode placeholder-gray-500 text-sm">
+                                
+                                <div class="pt-4">
+                                    <button class="px-12 py-3 rounded-full border border-[#333] text-[#333] font-bold text-xs uppercase tracking-widest hover:bg-[#333] hover:text-white transition-colors">
+                                        Sign In
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-8 space-y-4">
+                                <a href="#" class="block text-sm text-[#737373] underline underline-offset-4 decoration-1">Forgot your password?</a>
+                                <p class="text-sm text-[#737373]">
+                                    Don't have an account? 
+                                    <button onclick="toggleAuthPage('register')" class="text-[#333] underline underline-offset-4 decoration-1 font-medium ml-1">Sign up!</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 2: REGISTER (Oculta por defecto) -->
+            <div id="page-register" class="animate-fade-in hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-64px)]">
+                    <!-- Imagen Izquierda (Diferente para registro) -->
+                    <div class="relative h-64 md:h-full overflow-hidden order-1 md:order-1">
+                        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=2070" class="w-full h-full object-cover" alt="Register Model" />
+                        <div class="absolute bottom-20 left-12 max-w-sm">
+                            <h2 class="text-white text-4xl md:text-5xl font-medium tracking-tight leading-tight drop-shadow-md">
+                                Join the club.
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Formulario Derecha -->
+                    <div class="bg-[#F4F4F4] flex flex-col items-center justify-center p-8 md:p-24 order-2 md:order-2">
+                        <div class="w-full max-w-sm text-center">
+                            <h2 class="text-4xl font-bold tracking-tight text-[#4A4A4A] mb-8">Create Account</h2>
+                            
+                            <form class="space-y-4" onsubmit="event.preventDefault();">
+                                <input type="text" placeholder="First Name" class="input-rhode placeholder-gray-500 text-sm">
+                                <input type="text" placeholder="Last Name" class="input-rhode placeholder-gray-500 text-sm">
+                                <input type="email" placeholder="Email" class="input-rhode placeholder-gray-500 text-sm">
+                                <input type="password" placeholder="Password" class="input-rhode placeholder-gray-500 text-sm">
+                                
+                                <div class="pt-4">
+                                    <button class="px-12 py-3 rounded-full border border-[#333] text-[#333] font-bold text-xs uppercase tracking-widest hover:bg-[#333] hover:text-white transition-colors">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-8">
+                                <p class="text-sm text-[#737373]">
+                                    Already have an account? 
+                                    <button onclick="toggleAuthPage('login')" class="text-[#333] underline underline-offset-4 decoration-1 font-medium ml-1">Login</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- 2. VISTA NOSOTROS (7 SECCIONES) -->
+        <section id="view-about" class="view-section">
+            <div class="animate-fade-in bg-white">
+                
+                <!-- SECCIÓN 1: HERO -->
+                <div class="h-[80vh] relative flex items-center justify-center overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?q=80&w=2073" class="absolute inset-0 w-full h-full object-cover opacity-90 grayscale" alt="Skin Texture">
+                    <div class="z-10 text-center max-w-4xl px-6">
+                        <span class="text-white/80 font-bold text-xs uppercase tracking-[0.3em] mb-6 block">Capítulo I</span>
+                        <h1 class="text-white text-6xl md:text-8xl font-bold tracking-tighter mb-6 drop-shadow-lg">ORIGEN</h1>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: HISTORIA -->
+                <div class="py-32 px-6 md:px-12 max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 md:order-1">
+                        <h2 class="text-4xl font-bold tracking-tight mb-8 text-[#333]">Más que una clínica.</h2>
+                        <p class="text-[#555] text-lg leading-relaxed mb-6">
+                            Depiline nació en 2024 con una misión radicalmente simple: eliminar el dolor de la ecuación de belleza. Lo que comenzó como un pequeño estudio de láser diodo se ha transformado en un santuario de cuidado personal.
+                        </p>
+                    </div>
+                    <div class="h-[600px] bg-gray-100 rounded-lg overflow-hidden order-1 md:order-2">
+                        <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070" class="w-full h-full object-cover" alt="History">
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: FILOSOFÍA (Texto Grande) -->
+                <div class="py-40 px-6 bg-[#F5F5F0] text-center">
+                    <div class="max-w-3xl mx-auto">
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-10 text-[#333] leading-tight">"LA PIEL ES EL ESPEJO DE TU HISTORIA. NOSOTROS SOLO AYUDAMOS A PULIRLO."</h2>
+                        <span class="text-sm font-bold uppercase tracking-widest text-gray-500">— Manifiesto Depiline</span>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: EL EQUIPO -->
+                <div class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+                    <div class="flex justify-between items-end mb-16">
+                        <h2 class="text-3xl font-bold tracking-tight">Especialistas</h2>
+                        <a href="#" class="text-xs font-bold uppercase underline">Ver todos</a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="group cursor-pointer">
+                            <div class="h-[500px] mb-4 overflow-hidden rounded-sm bg-gray-200">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1888" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0">
+                            </div>
+                            <h3 class="font-bold text-sm uppercase">Dra. Ana Vega</h3>
+                            <p class="text-xs text-[#737373]">Dermatología</p>
+                        </div>
+                        <div class="group cursor-pointer">
+                            <div class="h-[500px] mb-4 overflow-hidden rounded-sm bg-gray-200">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1887" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0">
+                            </div>
+                            <h3 class="font-bold text-sm uppercase">Carlos Ruiz</h3>
+                            <p class="text-xs text-[#737373]">Tecnología Láser</p>
+                        </div>
+                        <div class="group cursor-pointer">
+                            <div class="h-[500px] mb-4 overflow-hidden rounded-sm bg-gray-200">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0">
+                            </div>
+                            <h3 class="font-bold text-sm uppercase">Elena Cruz</h3>
+                            <p class="text-xs text-[#737373]">Estética Avanzada</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 5: INGREDIENTES -->
+                <div class="py-24 bg-black text-white">
+                    <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <div>
+                            <span class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-4 block">Ciencia</span>
+                            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ingredientes Activos</h2>
+                            <p class="text-gray-400 text-lg mb-8">Nuestros productos post-tratamiento utilizan biotecnología para acelerar la recuperación de la barrera cutánea.</p>
+                            <ul class="space-y-4">
+                                <li class="border-b border-gray-800 pb-4 flex justify-between"><span>Péptidos de Cobre</span> <span class="text-gray-500">Reparación</span></li>
+                                <li class="border-b border-gray-800 pb-4 flex justify-between"><span>Centella Asiática</span> <span class="text-gray-500">Calma</span></li>
+                                <li class="border-b border-gray-800 pb-4 flex justify-between"><span>Ácido Hialurónico</span> <span class="text-gray-500">Hidratación</span></li>
+                            </ul>
+                        </div>
+                        <div class="h-[500px] bg-gray-900 rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?q=80&w=1760" class="w-full h-full object-cover opacity-80" alt="Ingredients">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 6: ESPACIOS -->
+                <div class="py-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 h-[80vh]">
+                        <div class="relative group overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                                <h3 class="text-white text-3xl font-bold tracking-widest uppercase">Madrid</h3>
+                            </div>
+                        </div>
+                        <div class="relative group overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                                <h3 class="text-white text-3xl font-bold tracking-widest uppercase">Barcelona</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 7: CTA -->
+                <div class="py-32 px-6 text-center bg-white">
+                    <h2 class="text-3xl font-bold tracking-tight mb-6">Tu piel espera.</h2>
+                    <button onclick="navigateTo('shop')" class="bg-[#333] text-white px-12 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black transition-all">
+                        Reservar Cita
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. VISTA TIENDA (Simple para este ejemplo) -->
+        <section id="view-shop" class="view-section">
+            <div class="bg-[#F9F9F9] min-h-screen pt-12 pb-24 px-6 animate-fade-in">
+                <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24">
+                    <div class="relative bg-[#EAEAEA] rounded-3xl overflow-hidden aspect-[4/5] md:aspect-auto md:h-[80vh] group">
+                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1887" class="w-full h-full object-cover mix-blend-multiply transition-transform duration-700 group-hover:scale-105">
+                    </div>
+                    <div class="flex flex-col justify-center pt-8 md:pt-0">
+                        <h1 class="text-5xl font-bold tracking-tighter text-[#262626] mb-4 lowercase">kit post-láser</h1>
+                        <p class="text-[#555] text-lg leading-relaxed mb-8">El cuidado esencial reimaginado. Gel de aloe y crema regeneradora.<br><br><strong>Envío gratis sobre $150.000</strong></p>
+                        <button onclick="addToCart('Kit Post-Láser', 45000, 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1887')" class="w-full py-5 rounded-full border border-[#333] text-[#333] hover:bg-[#333] hover:text-white transition-all text-sm font-bold uppercase tracking-widest flex justify-between px-8"><span>Agregar</span><span>$45.000</span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. VISTA FUTURO (Simplificada para mantener el ejemplo) -->
+        <section id="view-futures" class="view-section">
+            <div class="min-h-screen bg-black text-white flex items-center justify-center p-6">
+                <div class="text-center">
+                    <h1 class="text-6xl font-bold mb-4">ROADMAP 2025</h1>
+                    <p class="text-gray-400">Tecnología predictiva para tu piel.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#F9F9F9] py-12 border-t border-gray-200">
+        <div class="max-w-[1920px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-end">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tighter lowercase mb-4 text-[#333]">depiline</h2>
+                <div class="flex space-x-4 text-xs font-bold uppercase tracking-widest text-[#737373]">
+                    <a href="#" class="hover:text-[#333]">Instagram</a>
+                    <a href="#" class="hover:text-[#333]">Contact</a>
+                </div>
+            </div>
+            <p class="text-[10px] text-[#999] mt-8 md:mt-0">© 2024 DEPILINE SPA LLC.</p>
+        </div>
+    </footer>
+
+    <!-- CART OVERLAY -->
+    <div id="cart-overlay" class="fixed inset-0 z-[70] hidden">
+        <div onclick="toggleCart()" class="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity opacity-0" id="cart-backdrop"></div>
+        <div id="cart-drawer" class="absolute right-0 top-0 w-full md:w-[480px] h-full bg-[#F5F5F0] flex flex-col shadow-2xl transform translate-x-full transition-transform duration-500">
+            <div class="p-6 relative">
+                <button onclick="toggleCart()" class="absolute right-6 top-6"><i class="ph-x text-2xl text-[#333]"></i></button>
+                <div class="text-center mt-8"><h3 class="text-lg text-[#333]" id="cart-title">Tu carro está vacío</h3></div>
+                <div class="mt-8">
+                    <div class="w-full h-[1px] bg-[#Ddd] relative mb-4"><div id="shipping-bar" class="absolute top-0 left-0 h-full bg-[#333] transition-all duration-500" style="width: 0%"></div></div>
+                    <p class="text-center text-sm text-[#555]" id="shipping-text">agrega <strong>$150.000</strong> más para envío <strong>GRATIS</strong></p>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto px-6 py-4 hide-scrollbar"><div id="cart-items" class="space-y-6 mb-12"></div></div>
+            <div class="p-6 bg-[#F5F5F0] border-t border-gray-200/50">
+                <div class="flex justify-between items-center mb-4"><span class="text-lg text-[#333]">subtotal</span><span class="text-lg font-bold text-[#333]" id="cart-subtotal">$0</span></div>
+                <button class="w-full bg-[#5c5c5c] text-white py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-[#333] transition-colors shadow-lg">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+    <div id="search-overlay" class="fixed inset-0 z-[70] bg-white hidden flex-col animate-fade-in">
+        <div class="flex justify-end p-6"><button onclick="toggleSearch()" class="p-2 hover:rotate-90 transition-transform duration-300"><i class="ph-x text-3xl text-[#333]"></i></button></div>
+        <div class="flex-1 flex flex-col max-w-4xl mx-auto w-full px-6 pt-12">
+            <input type="text" placeholder="BUSCAR..." class="w-full text-4xl md:text-6xl font-bold text-[#333] border-b-2 border-[#333] py-4 focus:outline-none uppercase bg-transparent" autofocus />
+            <div class="mt-16">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-[#999] mb-6">Tendencias</h4>
+                <div class="flex gap-4"><button class="px-6 py-3 bg-[#F4F4F4] rounded-full text-sm font-medium hover:bg-[#333] hover:text-white transition-colors">Láser</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        let cart = [];
+        const FREE_SHIPPING_THRESHOLD = 150000;
+
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewId}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Lógica para alternar entre Login y Registro en la pestaña Cuenta
+        function toggleAuthPage(page) {
+            document.getElementById('page-login').classList.add('hidden');
+            document.getElementById('page-register').classList.add('hidden');
+            document.getElementById(`page-${page}`).classList.remove('hidden');
+        }
+
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+            } else {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+            }
+        }
+
+        function toggleCart() {
+            const overlay = document.getElementById('cart-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.remove('translate-x-full');
+                    backdrop.classList.remove('opacity-0');
+                }, 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 500);
+            }
+        }
+
+        function addToCart(name, price, image) {
+            cart.push({name, price, image});
+            updateCartUI();
+            const overlay = document.getElementById('cart-overlay');
+            if(overlay.classList.contains('hidden')) toggleCart();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                subtotal += item.price;
+                container.innerHTML += `
+                    <div class="flex gap-4 animate-fade-in">
+                        <div class="w-20 h-24 bg-white rounded overflow-hidden flex-shrink-0"><img src="${item.image}" class="w-full h-full object-cover"></div>
+                        <div class="flex-1"><h4 class="font-bold text-sm uppercase text-[#333]">${item.name}</h4><span class="text-sm">$${item.price.toLocaleString()}</span></div>
+                    </div>`;
+            });
+            document.getElementById('cart-subtotal').innerText = `$${subtotal.toLocaleString()}`;
+            const percent = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
+            const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+            document.getElementById('shipping-bar').style.width = `${percent}%`;
+            const shippingText = document.getElementById('shipping-text');
+            if (percent < 100) shippingText.innerHTML = `agrega <strong>$${remaining.toLocaleString()}</strong> más para envío <strong>GRATIS</strong>`;
+            else shippingText.innerHTML = `¡Genial! Tienes envío <strong>GRATIS</strong>`;
+        }
+    </script>
+</body>
+</html>

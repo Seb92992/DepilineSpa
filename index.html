@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depiline Spa - Sistema Admin</title>
+  
+  <!-- Fuente Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Tu CSS Puro -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PANTALLA DE LOGIN -->
+  <div id="login-overlay" class="overlay login-bg open">
+    <div class="modal-box text-center" style="width: 380px;">
+      <h1 class="text-brand mb-10">✿ Depiline</h1>
+      <p class="text-light mb-20">Gestión Administrativa</p>
+      <form onsubmit="handleLogin(event)">
+        <input type="text" class="input-std" placeholder="Usuario (admin)" required>
+        <input type="password" class="input-std" placeholder="Contraseña (1234)" required>
+        <button type="submit" class="btn btn-primary w-full">INICIAR SESIÓN</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="layout hidden" id="app-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo" onclick="goTab('dashboard')"><span>✿</span> Depiline</div>
+      <nav class="nav">
+        <button class="nav-btn active" onclick="goTab('dashboard')" id="nav-dashboard"><span>📊</span> Dashboard</button>
+        <button class="nav-btn" onclick="goTab('agenda')" id="nav-agenda"><span>📅</span> Agenda</button>
+        <button class="nav-btn" onclick="goTab('clientes')" id="nav-clientes"><span>👥</span> Clientes</button>
+        <button class="nav-btn" onclick="goTab('finanzas')" id="nav-finanzas"><span>💰</span> Finanzas</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="nav-btn" onclick="location.reload()"><span>🚪</span> Cerrar Sesión</button>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="content">
+      <header class="header">
+        <div>
+          <h2 id="page-title" class="text-brand">Dashboard</h2>
+          <p class="text-light" style="font-size:0.9rem;">Resumen General</p>
+        </div>
+        <div class="profile-pill" onclick="openModal('profile')">
+          <span style="font-size:0.9rem; font-weight:500;" id="user-display-name">Admin</span>
+          <div class="avatar" id="user-avatar-display">AD</div>
+        </div>
+      </header>
+
+      <!-- VISTA 1: DASHBOARD -->
+      <section id="view-dashboard" class="section-view active">
+        <div class="dash-grid-kpi">
+          <div class="kpi-card accent-olive">
+            <div class="kpi-val">S/ 2,450</div><div class="kpi-label">Ventas Hoy</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">18</div><div class="kpi-label">Citas Agendadas</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">4</div><div class="kpi-label">Clientes Nuevos</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">98%</div><div class="kpi-label">Satisfacción</div>
+          </div>
+        </div>
+        
+        <div class="dash-charts-row">
+          <!-- Gráfico Circular -->
+          <div class="chart-box">
+             <h4 class="text-brand mb-10">Distribución de Servicios</h4>
+             <div class="chart-center"><canvas id="chartServices"></canvas></div>
+          </div>
+          <!-- Tarjeta Next Appointment -->
+          <div class="kpi-card kpi-next-appointment">
+             <div style="font-size:0.8rem; opacity:0.8; text-transform:uppercase;">Próxima Cita</div>
+             <div class="next-appt-time">11:30</div>
+             <div style="font-size:1.2rem; font-weight:600;">Lucía Mendez</div>
+             <div style="opacity:0.8;">Depilación Láser • Cabina 3</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VISTA 2: AGENDA (Funcional) -->
+      <section id="view-agenda" class="section-view">
+        <div class="calendar-wrapper">
+          <div class="flex-between mb-20">
+            <h3 class="text-brand">Calendario Diciembre 2025</h3>
+            <button class="btn btn-primary" onclick="openModal('appointment')">+ Nueva Cita</button>
+          </div>
+          
+          <div class="cal-grid" id="calendar-grid">
+            <!-- JS GENERARÁ LOS DÍAS AQUÍ -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VISTA 3: FINANZAS (Espectacular) -->
+      <section id="view-finanzas" class="section-view">
+        <!-- Tarjetas Finanzas -->
+        <div class="fin-grid">
+           <div class="fin-card grad-1">
+             <div class="fin-title">Ingresos Totales (Mes)</div>
+             <div class="fin-amount">S/ 12,450</div>
+             <div class="fin-trend">↑ 15% vs mes anterior</div>
+           </div>
+           <div class="fin-card grad-2">
+             <div class="fin-title">Gastos Operativos</div>
+             <div class="fin-amount">S/ 4,200</div>
+             <div class="fin-trend">Insumos y Personal</div>
+           </div>
+           <div class="fin-card grad-3">
+             <div class="fin-title">Ganancia Neta</div>
+             <div class="fin-amount">S/ 8,250</div>
+             <div class="fin-trend">Rentabilidad saludable</div>
+           </div>
+        </div>
+
+        <!-- Gráfico Grande -->
+        <div class="chart-container-large">
+           <div class="flex-between mb-10">
+             <h3 class="text-brand">Evolución Financiera 2025</h3>
+             <button class="btn btn-ghost">Descargar Reporte</button>
+           </div>
+           <div class="chart-area-wrapper"><canvas id="financeChart"></canvas></div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="calendar-wrapper">
+           <h3 class="text-brand mb-10">Últimas Transacciones</h3>
+           <table class="table-wrapper">
+             <thead>
+               <tr><th>Fecha</th><th>Concepto</th><th>Monto</th></tr>
+             </thead>
+             <tbody>
+               <tr><td>05 Dic</td><td>Paquete 10 sesiones Láser</td><td class="text-success">+ S/ 800.00</td></tr>
+               <tr><td>04 Dic</td><td>Compra Cremas Hidratantes</td><td class="text-danger">- S/ 250.00</td></tr>
+             </tbody>
+           </table>
+        </div>
+      </section>
+
+      <!-- VISTA 4: CLIENTES -->
+      <section id="view-clientes" class="section-view">
+        <div class="calendar-wrapper">
+          <h3>Gestión de Clientes</h3>
+          <p class="text-light" style="margin-top:10px;">Funcionalidad disponible en módulo completo.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL GENERICO -->
+  <div id="modal-container" class="overlay">
+    <div class="modal-box">
+       <div class="flex-between mb-20">
+         <h3 id="modal-title">Título</h3>
+         <button onclick="closeModal()" class="btn btn-ghost">✕</button>
+       </div>
+       
+       <!-- Form Cita -->
+       <div id="form-appointment" class="hidden">
+         <form onsubmit="saveAppointment(event)">
+           <input id="appt-client" class="input-std" placeholder="Nombre del Cliente" required>
+           <div class="input-row">
+             <input id="appt-day" type="number" min="1" max="31" class="input-std" placeholder="Día (1-31)" required>
+             <input id="appt-time" type="time" class="input-std" required>
+           </div>
+           <select id="appt-service" class="input-std">
+             <option>Depilación Láser</option>
+             <option>Limpieza Facial</option>
+             <option>Masaje Relajante</option>
+           </select>
+           <button type="submit" class="btn btn-primary w-full">Agendar Cita</button>
+         </form>
+       </div>
+
+       <!-- Form Perfil -->
+       <div id="form-profile" class="hidden">
+          <form onsubmit="saveProfile(event)">
+            <input id="prof-name" class="input-std" placeholder="Tu Nombre">
+            <button type="submit" class="btn btn-primary w-full">Guardar Perfil</button>
+          </form>
+       </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // ================= DATOS & ESTADO =================
+    let appointments = [
+      { id: 1, day: 5, time: '10:00', client: 'Ana López', service: 'Facial', vip: false },
+      { id: 2, day: 5, time: '15:30', client: 'Carla Ruiz', service: 'Masaje', vip: true },
+      { id: 3, day: 12, time: '09:00', client: 'María G.', service: 'Láser', vip: false }
+    ];
+
+    // ================= LOGIN =================
+    function handleLogin(e) {
+      e.preventDefault();
+      document.getElementById('login-overlay').classList.remove('open');
+      document.getElementById('app-layout').classList.remove('hidden');
+      initDashboardCharts();
+      initFinanceChart();
+      renderCalendar();
+    }
+
+    // ================= NAVEGACIÓN =================
+    function goTab(id) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('nav-'+id).classList.add('active');
+      document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+      document.getElementById('view-'+id).classList.add('active');
+      
+      const titles = {dashboard:'Dashboard', agenda:'Agenda', clientes:'Clientes', finanzas:'Reporte Financiero'};
+      document.getElementById('page-title').innerText = titles[id];
+    }
+
+    // ================= CALENDARIO & CITAS =================
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+      
+      // Headers
+      ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'].forEach(d => {
+        grid.innerHTML += `<div class="cal-head">${d}</div>`;
+      });
+
+      // Days 1-31
+      for(let i=1; i<=31; i++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'cal-day';
+        dayDiv.innerHTML = `<div class="cal-num">${i}</div>`;
+        
+        // Buscar citas para este día
+        const dayAppts = appointments.filter(a => a.day == i);
+        dayAppts.forEach(appt => {
+          const tag = document.createElement('div');
+          tag.className = appt.vip ? 'appt-tag vip' : 'appt-tag';
+          tag.innerText = `${appt.time} ${appt.client}`;
+          tag.title = appt.service;
+          dayDiv.appendChild(tag);
+        });
+
+        grid.appendChild(dayDiv);
+      }
+    }
+
+    function saveAppointment(e) {
+      e.preventDefault();
+      const client = document.getElementById('appt-client').value;
+      const day = document.getElementById('appt-day').value;
+      const time = document.getElementById('appt-time').value;
+      const service = document.getElementById('appt-service').value;
+
+      appointments.push({
+        id: Date.now(),
+        day: parseInt(day),
+        time: time,
+        client: client,
+        service: service,
+        vip: false
+      });
+
+      renderCalendar();
+      closeModal();
+      e.target.reset();
+      alert(`Cita agendada para el día ${day} a las ${time}`);
+    }
+
+    // ================= MODALES =================
+    const modal = document.getElementById('modal-container');
+    function openModal(type) {
+      modal.classList.add('open');
+      document.getElementById('form-appointment').classList.add('hidden');
+      document.getElementById('form-profile').classList.add('hidden');
+
+      if(type === 'appointment') {
+        document.getElementById('modal-title').innerText = 'Nueva Cita';
+        document.getElementById('form-appointment').classList.remove('hidden');
+      } else if (type === 'profile') {
+        document.getElementById('modal-title').innerText = 'Editar Perfil';
+        document.getElementById('form-profile').classList.remove('hidden');
+        document.getElementById('prof-name').value = document.getElementById('user-display-name').innerText;
+      }
+    }
+    function closeModal() { modal.classList.remove('open'); }
+    function saveProfile(e) {
+      e.preventDefault();
+      document.getElementById('user-display-name').innerText = document.getElementById('prof-name').value;
+      closeModal();
+    }
+
+    // ================= GRÁFICOS (CHART.JS) =================
+    function initDashboardCharts() {
+      const colors = { deep: '#53583F', olive: '#B4B892', bronze: '#735D3A', sage: '#809571' };
+      new Chart(document.getElementById('chartServices'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Láser', 'Facial', 'Masaje', 'Uñas'],
+          datasets: [{
+            data: [45, 25, 20, 10],
+            backgroundColor: [colors.deep, colors.olive, colors.bronze, colors.sage],
+            borderWidth: 0
+          }]
+        },
+        options: { cutout: '75%', responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'bottom', labels:{usePointStyle:true} } } }
+      });
+    }
+
+    function initFinanceChart() {
+      const ctx = document.getElementById('financeChart').getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, 'rgba(180, 184, 146, 0.6)'); 
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+          datasets: [{
+            label: 'Ingresos (S/)',
+            data: [4500, 5200, 4800, 6100, 7500, 8400, 9100, 8800, 10500, 11200, 12450, 13100],
+            borderColor: '#53583F',
+            backgroundColor: gradient,
+            borderWidth: 2,
+            pointBackgroundColor: '#735D3A',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
